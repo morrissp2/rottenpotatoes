@@ -7,6 +7,7 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = Movie.all_ratings
     sort = params[:sort] || session[:sort]
     if sort == 'title'
       @movies = Movie.order(:title)
@@ -14,6 +15,13 @@ class MoviesController < ApplicationController
       @movies = Movie.order (:release_date)
     else	     		
       @movies = Movie.all
+    end
+    @sort_ratings = params[:ratings]	
+    if @sort_ratings != nil 
+#        @sort_ratings = @sort_ratings.keys 
+	@movies = Movie.where(["rating IN (?)", @sort_ratings.keys]).all
+    elsif 
+        @sort_ratings = Hash.new 
     end
   end
 
