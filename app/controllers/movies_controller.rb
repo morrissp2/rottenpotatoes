@@ -21,7 +21,9 @@ class MoviesController < ApplicationController
 #        @sort_ratings = @sort_ratings.keys 
 	@movies = Movie.where(["rating IN (?)", @sort_ratings.keys]).all
     elsif 
-        @sort_ratings = Hash.new 
+        h = Hash.new
+	Movie.all_ratings.each { | e | h[e] = "1" }
+        @sort_ratings = h
     end
   end
 
